@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BankSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccNumber" Type="varchar" MaxLength="12" />
+          <Property Name="AccType" Type="varchar" MaxLength="10" />
+          <Property Name="Reg_Date" Type="datetime" />
+          <Property Name="Balance" Type="real" />
+          <Property Name="CustId" Type="int" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="Phone" Type="varchar" MaxLength="12" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar" MaxLength="200" />
+          <Property Name="Username" Type="varchar" MaxLength="20" />
+          <Property Name="Password" Type="varchar" MaxLength="20" />
+          <Property Name="Reg_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TranDate" Type="datetime" />
+          <Property Name="Amount" Type="real" />
+          <Property Name="TranType" Type="varchar" MaxLength="10" />
+          <Property Name="AccId" Type="int" />
+        </EntityType>
+        <Association Name="FK__Account__CustId__267ABA7A">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="CustId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacti__AccId__29572725">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="AccId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ADD_TRANSACTION_RECORD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Username" Type="varchar" Mode="In" />
+          <Parameter Name="AccNumber" Type="varchar" Mode="In" />
+          <Parameter Name="Amount" Type="float" Mode="In" />
+        </Function>
+        <Function Name="GET_BALANCE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CustId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="INSERT_INTO_BANK_TABLES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="dob" Type="date" Mode="In" />
+          <Parameter Name="phone" Type="varchar" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="address" Type="varchar" Mode="In" />
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="accType" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UPDATE_TRANSACTION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Username" Type="varchar" Mode="In" />
+          <Parameter Name="AccNumber" Type="varchar" Mode="In" />
+          <Parameter Name="AccHolder" Type="varchar" Mode="In" />
+          <Parameter Name="Amount" Type="float" Mode="In" />
+          <Parameter Name="text" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="View_Transaction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="BankSystemModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Account__CustId__267ABA7A" Association="Self.FK__Account__CustId__267ABA7A">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Account" EntitySet="Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacti__AccId__29572725" Association="Self.FK__Transacti__AccId__29572725">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BankSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="AccType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Reg_Date" Type="DateTime" Precision="3" />
+          <Property Name="Balance" Type="Single" />
+          <Property Name="CustId" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Account__CustId__267ABA7A" FromRole="Account" ToRole="Customer" />
+          <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__AccId__29572725" FromRole="Account" ToRole="Transactions" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Reg_Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Accounts" Relationship="Self.FK__Account__CustId__267ABA7A" FromRole="Customer" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Transaction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TranDate" Type="DateTime" Precision="3" />
+          <Property Name="Amount" Type="Single" />
+          <Property Name="TranType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AccId" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Transacti__AccId__29572725" FromRole="Transactions" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK__Account__CustId__267ABA7A">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Account" Type="Self.Account" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Account">
+              <PropertyRef Name="CustId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transacti__AccId__29572725">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Transactions" Type="Self.Transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="AccId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BankSystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Transactions" EntityType="Self.Transaction" />
+          <AssociationSet Name="FK__Account__CustId__267ABA7A" Association="Self.FK__Account__CustId__267ABA7A">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Account" EntitySet="Accounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transacti__AccId__29572725" Association="Self.FK__Transacti__AccId__29572725">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <FunctionImport Name="ADD_TRANSACTION_RECORD">
+            <Parameter Name="Username" Mode="In" Type="String" />
+            <Parameter Name="AccNumber" Mode="In" Type="String" />
+            <Parameter Name="Amount" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="INSERT_INTO_BANK_TABLES">
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="dob" Mode="In" Type="DateTime" />
+            <Parameter Name="phone" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="address" Mode="In" Type="String" />
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="accType" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UPDATE_TRANSACTION" ReturnType="Collection(Int32)">
+            <Parameter Name="Username" Mode="In" Type="String" />
+            <Parameter Name="AccNumber" Mode="In" Type="String" />
+            <Parameter Name="AccHolder" Mode="In" Type="String" />
+            <Parameter Name="Amount" Mode="In" Type="Double" />
+            <Parameter Name="text" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GET_BALANCE" ReturnType="Collection(Single)">
+          <Parameter Name="CustId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="View_Transaction" ReturnType="Collection(BankSystemModel.View_Transaction_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="View_Transaction_Result">
+          <Property Type="DateTime" Name="TranDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="TranType" Nullable="true" MaxLength="10" />
+          <Property Type="Single" Name="Amount" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BankSystemModelStoreContainer" CdmEntityContainer="BankSystemEntities">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="BankSystemModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AccNumber" ColumnName="AccNumber" />
+                <ScalarProperty Name="AccType" ColumnName="AccType" />
+                <ScalarProperty Name="Reg_Date" ColumnName="Reg_Date" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="CustId" ColumnName="CustId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="BankSystemModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Reg_Date" ColumnName="Reg_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="BankSystemModel.Transaction">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TranDate" ColumnName="TranDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TranType" ColumnName="TranType" />
+                <ScalarProperty Name="AccId" ColumnName="AccId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ADD_TRANSACTION_RECORD" FunctionName="BankSystemModel.Store.ADD_TRANSACTION_RECORD" />
+          <FunctionImportMapping FunctionImportName="INSERT_INTO_BANK_TABLES" FunctionName="BankSystemModel.Store.INSERT_INTO_BANK_TABLES" />
+          <FunctionImportMapping FunctionImportName="UPDATE_TRANSACTION" FunctionName="BankSystemModel.Store.UPDATE_TRANSACTION" />
+          <FunctionImportMapping FunctionImportName="GET_BALANCE" FunctionName="BankSystemModel.Store.GET_BALANCE" />
+          <FunctionImportMapping FunctionImportName="View_Transaction" FunctionName="BankSystemModel.Store.View_Transaction">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BankSystemModel.View_Transaction_Result">
+                <ScalarProperty Name="TranDate" ColumnName="TranDate" />
+                <ScalarProperty Name="TranType" ColumnName="TranType" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

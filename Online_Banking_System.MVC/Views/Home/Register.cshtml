@@ -1,0 +1,90 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/Style.css" rel="stylesheet" />
+    <script defer src="~/Content/register.js"></script>
+</head>
+<body>
+    <div class="container card">
+        <form id="signup" class="form">
+            <h1>Sign Up</h1>
+            <div class="form-field">
+                @* <div class="col-md-1">*@
+                <label for="username">Username*:</label>
+                @* </div><br />*@
+
+                <input type="text" name="username" id="IUsername" autocomplete="on"><br />
+                <small></small>
+            </div>
+
+            <div class="form-field">
+                @*<div class="col-md-1">*@
+                <label for="password">Password*:</label>
+                @* </div>*@
+                <input type="password" name="password" id="IPassword" autocomplete="off"><br />
+                <small></small>
+            </div>
+
+            <div class="form-field">
+                @* <div class="col-md-1">*@
+                <label for="Name">Name*:</label>
+                @*</div>*@
+                <input type="text" name="Name" id="IName" autocomplete="off"><br />
+                <small></small>
+            </div>
+
+            <div class="form-field">
+                @*<div class="col-md-1">*@
+                <label for="email">Email*:</label>
+                @*</div>*@
+                <input type="text" name="email" id="IEmail" autocomplete="off"><br />
+                <small></small>
+            </div>
+
+            <div class="form-field">
+                @* <div class="col-md-1">*@
+                <label for="DOB">DOB*:</label>
+                @*  </div>*@
+
+                <input type="date" name="Date of Birth" id="IDOB" autocomplete="off"><br />
+                <small></small>
+            </div>
+
+            <div class="form-field">
+                @*<div class="col-md-1">*@
+                <label for="phone">Phone*:</label>
+                @*</div>*@
+                <input type="tel" name="Phone" id="IPhone" autocomplete="off"><br />
+                <small></small>
+            </div>
+
+            <div class="form-field">
+                @*<div class="col-md-1">*@
+                <label for="Address">Address*:</label>
+                @*</div>*@
+                <input type="text" name="Address" id="IAddress" autocomplete="off"><br />
+                <small></small>
+            </div>
+
+
+            <div class="form-field">
+                <label for="Account Type">Select the type of account:</label>
+                <select name="Account type" id="IAccountType">
+                    <option value="Savings">Savings</option>
+                    <option value="Current">Current</option>
+                </select>
+                </div>
+
+                <div class="form-field">
+                    <input type="submit" value="Sign Up">
+                </div>
+        </form>
+    </div>
+
+    
+</body>
+</html>

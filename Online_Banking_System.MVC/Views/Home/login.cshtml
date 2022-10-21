@@ -1,0 +1,54 @@
+﻿
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Login</title>
+
+        <link href="~/Content/Style.css" rel="stylesheet" />
+        <script defer src="~/Content/Login.js"></script>
+
+    </head>
+    <body>
+        <h3>Login to Online banking System</h3>
+        <br />
+        <h5>(CARE: User Name and Password are case sensitive)</h5>
+        <br />
+        <br />
+        <div class="container card">
+            <form id="login" class="form">
+                <h1>
+                    Login
+                </h1>
+                <div class="form-field">
+                    @*<div class="col-md-1">*@
+                        <label for="username">Username:</label>
+                    @*</div>*@
+
+                    <input type="text" name="username" id="IUsername" autocomplete="on"><br />
+                    <small></small>
+                </div>
+                
+                <div class="form-field">
+                   @* <div class="col-md-1">*@
+                        <label for="password">Password:</label>
+                    @*</div>*@
+                    <input type="password" name="password" id="IPassword" autocomplete="off"><br />
+                    <small></small>
+                </div>
+                
+                <div class="form-field">
+                    <div class="col-md-3"><input type="submit" value="Log In" class="btn btn-primary" /></div>
+
+                   </div>
+                
+                    Do not have an Account ?
+                    @Html.ActionLink("Signup here", "Register", "Home", new { area = "" }, null)
+            </form>
+        </div>
+
+
+    </body>
+</html>
+
+
+

@@ -1,0 +1,98 @@
+﻿<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<head>
+    <title>Welcome to online banking system</title>
+    <link href="~/Content/Style.css" rel="stylesheet" />
+    <script defer src="~/Content/Balance.js"></script>
+    <script defer src="~/Content/Transfer.js"></script>
+</head>
+<body>
+    <p>
+        <h2>WELCOME ALFIYA</h2>
+    </p>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Online Banking System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><input id="ShowBalance" class="btn-link btn-new d-flex MY" type="button" value="Balance" /></li>
+                    <li><input id="BtnTransaction" class="btn-link btn-new d-flex MY" type="button" value="My Transactions" /></li>
+                    <li><input id="BtnTransfer" class="btn-link btn-new d-flex MY" type="button" value="Amount Transfer" /></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div>
+
+        <h2><span id="bal"></span></h2>
+
+    </div>
+
+
+    <div id ="ITransfer" class="TransferContent">
+
+        <div class="form-field">
+            <label for="Account Number">Account Number:</label>
+            <input type="text" name="Account Number" id="IAccountNumber" autocomplete="on"><br />
+            <small></small>
+        </div>
+
+        <div class="form-field">
+            <label for="Account Holder">Account Holder:</label>
+            <input type="text" name="Account Holder" id="IAccountHolder" autocomplete="on"><br />
+            <small></small>
+        </div>
+
+        <div class="form-field">
+            <label for="Amount">Amount:</label>
+            <input type="text" name="Amount" id="IAmount" autocomplete="off"><br />
+            <small></small>
+        </div>
+
+        <button id="IBUTTON" >Send</button>
+
+        <h6 id="ISuccess"></h6>
+
+    </div>
+
+    <table id="ITransactions">    </table>
+
+</body>
+
+<script>
+    var amounttransfer = document.getElementById('ITransfer');
+    $('#BtnTransfer').click(function () {
+        amounttransfer.classList.add('Show')
+    })
+
+    var MyTransactions = document.getElementById('ITransactions');
+    $('#BtnTransaction').click(function () {
+        $.ajax({
+            url: 'https://localhost:44363/api/OnlinebankingSystem/MyTransactions',
+            method: 'GET',
+            success: function (res) {
+                var tableString = "";
+                $.each(res, function (index, value) {
+                    tableString += "<tr><td class='col-md-1 mb-3'>" + value.TranDate + "</td><td class='col-md-2 mb-3'>" + value.TranType+ "</td><td class='col-md-2 mb-3'>" + value.Amount + "</td></tr>";
+                });
+
+                $("#ITransactions").append(tableString);
+
+
+
+
+            },
+            error: function () {
+            },
+        });
+    })
+
+ </script>
